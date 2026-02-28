@@ -1,6 +1,6 @@
 {
-  "name": "@black-sun-cafe/shared",
-  "version": "0.2.0",
+  "name": "@black-sun-cafe/life-system-shared",
+  "version": "0.3.0",
   "type": "module",
   "files": ["dist", "src", "tsconfig.json"],
   "repository": {
