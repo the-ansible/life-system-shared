@@ -16,6 +16,7 @@ import type {
   janeExecutionsListSchema,
   communicationEventSchema,
   communicationEventInputSchema,
+  eventParticipantSchema,
 } from './schemas.js';
 
 export type Record = z.infer<typeof recordBaseSchema>;
@@ -35,5 +36,6 @@ export type JaneCommand = z.infer<typeof janeCommandSchema>;
 export type JaneExecutionView = z.infer<typeof janeExecutionViewSchema>;
 export type JaneExecutionsList = z.infer<typeof janeExecutionsListSchema>;
 
+export type EventParticipant = z.infer<typeof eventParticipantSchema>;
 export type CommunicationEvent = z.infer<typeof communicationEventSchema>;
 export type CommunicationEventInput = z.infer<typeof communicationEventInputSchema>;

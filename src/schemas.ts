@@ -146,14 +146,23 @@ export const janeExecutionsListSchema = z.object({
 
 // --- Communication events ---
 
+/** Identity of a message sender or recipient */
+export const eventParticipantSchema = z.object({
+  id: z.string(),                          // Stable identifier (e.g. "chris", "jane", "memory-worker")
+  displayName: z.string().optional(),      // Human-readable name
+  type: z.enum(["person", "system", "agent", "channel", "group"]),
+});
+
 export const communicationEventSchema = z.object({
-  id: z.string().uuid(),                // UUIDv7 — sortable, globally unique
-  parentId: z.string().uuid().optional(), // References a prior event (e.g. the message being replied to)
+  id: z.string().uuid(),                   // UUIDv7 — sortable, globally unique
+  parentId: z.string().uuid().optional(),  // References a prior event (e.g. the message being replied to)
   sessionId: z.string(),
-  channelType: z.string(),              // "message" | "email" | "canvas" | "claude-code"
+  channelType: z.string(),                // Abstract: "realtime" | "async" | "interactive" | "internal"
   direction: z.enum(["inbound", "outbound"]),
   contentType: z.literal("markdown"),
   content: z.string(),
+  sender: eventParticipantSchema.optional(),     // Who sent this message
+  recipients: z.array(eventParticipantSchema).optional(), // Who this message is for
   metadata: z.record(z.unknown()).default({}),
   timestamp: z.string().datetime(),
 });
