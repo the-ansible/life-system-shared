@@ -1,11 +1,11 @@
 {
-  "name": "@black-sun-cafe/life-system-shared",
-  "version": "0.3.0",
+  "name": "@the-ansible/life-system-shared",
+  "version": "0.4.0",
   "type": "module",
   "files": ["dist", "src", "tsconfig.json"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/black-sun-cafe/life-system-shared.git"
+    "url": "https://github.com/the-ansible/life-system-shared.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
