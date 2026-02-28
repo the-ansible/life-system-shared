@@ -1,9 +1,15 @@
 {
   "name": "@life-system/shared",
-  "version": "0.1.1",
-  "private": true,
+  "version": "0.2.0",
   "type": "module",
   "files": ["dist", "src", "tsconfig.json"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/black-sun-cafe/life-system-shared.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
