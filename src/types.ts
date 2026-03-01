@@ -14,6 +14,7 @@ import type {
   janeCommandSchema,
   janeExecutionViewSchema,
   janeExecutionsListSchema,
+  classificationHintsSchema,
   communicationEventSchema,
   communicationEventInputSchema,
   eventParticipantSchema,
@@ -36,6 +37,7 @@ export type JaneCommand = z.infer<typeof janeCommandSchema>;
 export type JaneExecutionView = z.infer<typeof janeExecutionViewSchema>;
 export type JaneExecutionsList = z.infer<typeof janeExecutionsListSchema>;
 
+export type ClassificationHints = z.infer<typeof classificationHintsSchema>;
 export type EventParticipant = z.infer<typeof eventParticipantSchema>;
 export type CommunicationEvent = z.infer<typeof communicationEventSchema>;
 export type CommunicationEventInput = z.infer<typeof communicationEventInputSchema>;

@@ -144,6 +144,14 @@ export const janeExecutionsListSchema = z.object({
   offset: z.number(),
 });
 
+// --- Classification hints (sender-supplied) ---
+
+export const classificationHintsSchema = z.object({
+  category: z.string().optional(),
+  urgency: z.string().optional(),
+  routing: z.string().optional(),
+});
+
 // --- Communication events ---
 
 /** Identity of a message sender or recipient */
@@ -163,6 +171,7 @@ export const communicationEventSchema = z.object({
   content: z.string(),
   sender: eventParticipantSchema.optional(),     // Who sent this message
   recipients: z.array(eventParticipantSchema).optional(), // Who this message is for
+  hints: classificationHintsSchema.optional(),
   metadata: z.record(z.unknown()).default({}),
   timestamp: z.string().datetime(),
 });
