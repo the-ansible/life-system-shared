@@ -87,7 +87,7 @@ export const recordLinkSchema = z.object({
 // --- Jane session (groups related commands) ---
 
 export const janeSessionSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
   name: z.string(),
   createdAt: z.string(),
   updatedAt: z.string(),
@@ -112,7 +112,7 @@ export const janeCommandSchema = z.object({
   thinkingMode: z.boolean(),
   errorMessage: z.string().nullable(),
   pid: z.number().nullable(),
-  sessionId: z.string().uuid().nullable(),
+  sessionId: z.string().nullable(),
   processAlive: z.boolean().nullable(),
   createdAt: z.string(),
   startedAt: z.string().nullable(),
@@ -130,7 +130,7 @@ export const janeExecutionViewSchema = z.object({
   taskType: z.string().nullable(),
   role: z.string().nullable(),
   initiatingCommandId: z.string().uuid().nullable(),
-  sessionId: z.string().uuid().nullable(),
+  sessionId: z.string().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
   command: janeCommandSchema.nullable(),
