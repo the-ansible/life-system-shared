@@ -180,3 +180,24 @@ export const communicationEventSchema = z.object({
 export const communicationEventInputSchema = communicationEventSchema.extend({
   id: z.string().uuid().optional(),
 });
+
+// --- Classification result event ---
+// Published to `communication.classification.<event-id>` after each inbound event is classified.
+// Subject is ephemeral (not persisted to JetStream) — subscribe before sending to receive it.
+
+export const classificationResultSchema = z.object({
+  /** The original CommunicationEvent ID (matches the NATS subject suffix) */
+  id: z.string().uuid(),
+  /** Routing decision: e.g. "simple_response", "task_request", "admin", "ignore" */
+  classification: z.string(),
+  /** Urgency level: "low" | "normal" | "high" */
+  urgency: z.string(),
+  /** Broad category: e.g. "conversation", "task", "admin" */
+  category: z.string(),
+  /** Classifier confidence (string representation, e.g. "0.95" or "high") */
+  confidence: z.string(),
+  /** Which classifier tier produced this result: "rules" | "ollama" | "claude" */
+  tier: z.string(),
+  /** ISO 8601 timestamp of when classification completed */
+  timestamp: z.string().datetime(),
+});
