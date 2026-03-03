@@ -180,3 +180,20 @@ export const communicationEventSchema = z.object({
 export const communicationEventInputSchema = communicationEventSchema.extend({
   id: z.string().uuid().optional(),
 });
+
+// --- Classification result ---
+
+/**
+ * Payload published to `communication.classification.<event-id>`.
+ * Note: the `communication.>` subject filter means these ARE captured by JetStream
+ * and will be delivered to any webhook forwarder on the stream.
+ */
+export const classificationResultSchema = z.object({
+  id: z.string().uuid(),          // Matches the event-id in the subject
+  classification: z.string(),     // e.g. "simple_response" | "task_request" | "admin" | "ignore"
+  urgency: z.string(),            // "low" | "normal" | "high"
+  category: z.string(),           // "conversation" | "task" | "admin" | etc.
+  confidence: z.string(),         // e.g. "0.95" (string from classifier)
+  tier: z.string(),               // "rules" | "ollama" | "claude"
+  timestamp: z.string().datetime(),
+});
