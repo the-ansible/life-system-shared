@@ -18,6 +18,7 @@ import type {
   communicationEventSchema,
   communicationEventInputSchema,
   eventParticipantSchema,
+  classificationResultSchema,
 } from './schemas.js';
 
 export type Record = z.infer<typeof recordBaseSchema>;
@@ -41,3 +42,4 @@ export type ClassificationHints = z.infer<typeof classificationHintsSchema>;
 export type EventParticipant = z.infer<typeof eventParticipantSchema>;
 export type CommunicationEvent = z.infer<typeof communicationEventSchema>;
 export type CommunicationEventInput = z.infer<typeof communicationEventInputSchema>;
+export type ClassificationResult = z.infer<typeof classificationResultSchema>;
