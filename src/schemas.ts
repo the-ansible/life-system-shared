@@ -87,7 +87,7 @@ export const recordLinkSchema = z.object({
 // --- Jane session (groups related commands) ---
 
 export const janeSessionSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
   name: z.string(),
   createdAt: z.string(),
   updatedAt: z.string(),
@@ -112,7 +112,7 @@ export const janeCommandSchema = z.object({
   thinkingMode: z.boolean(),
   errorMessage: z.string().nullable(),
   pid: z.number().nullable(),
-  sessionId: z.string().uuid().nullable(),
+  sessionId: z.string().nullable(),
   processAlive: z.boolean().nullable(),
   createdAt: z.string(),
   startedAt: z.string().nullable(),
@@ -130,7 +130,7 @@ export const janeExecutionViewSchema = z.object({
   taskType: z.string().nullable(),
   role: z.string().nullable(),
   initiatingCommandId: z.string().uuid().nullable(),
-  sessionId: z.string().uuid().nullable(),
+  sessionId: z.string().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
   command: janeCommandSchema.nullable(),
@@ -183,19 +183,23 @@ export const communicationEventInputSchema = communicationEventSchema.extend({
   id: z.string().uuid().optional(),
 });
 
-// --- Classification result ---
+// --- Classification result event ---
+// Published to `communication.classification.<event-id>` after each inbound event is classified.
+// Subject is ephemeral (not persisted to JetStream) — subscribe before sending to receive it.
 
-/**
- * Payload published to `communication.classification.<event-id>`.
- * Note: the `communication.>` subject filter means these ARE captured by JetStream
- * and will be delivered to any webhook forwarder on the stream.
- */
 export const classificationResultSchema = z.object({
-  id: z.string().uuid(),          // Matches the event-id in the subject
-  classification: z.string(),     // e.g. "simple_response" | "task_request" | "admin" | "ignore"
-  urgency: z.string(),            // "low" | "normal" | "high"
-  category: z.string(),           // "conversation" | "task" | "admin" | etc.
-  confidence: z.string(),         // e.g. "0.95" (string from classifier)
-  tier: z.string(),               // "rules" | "ollama" | "claude"
+  /** The original CommunicationEvent ID (matches the NATS subject suffix) */
+  id: z.string().uuid(),
+  /** Routing decision: e.g. "simple_response", "task_request", "admin", "ignore" */
+  classification: z.string(),
+  /** Urgency level: "low" | "normal" | "high" */
+  urgency: z.string(),
+  /** Broad category: e.g. "conversation", "task", "admin" */
+  category: z.string(),
+  /** Classifier confidence (string representation, e.g. "0.95" or "high") */
+  confidence: z.string(),
+  /** Which classifier tier produced this result: "rules" | "ollama" | "claude" */
+  tier: z.string(),
+  /** ISO 8601 timestamp of when classification completed */
   timestamp: z.string().datetime(),
 });
