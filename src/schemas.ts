@@ -169,7 +169,9 @@ export const communicationEventSchema = z.object({
   direction: z.enum(["inbound", "outbound"]),
   contentType: z.literal("markdown"),
   content: z.string(),
-  sender: eventParticipantSchema.optional(),     // Who sent this message
+  source: z.string().optional(),          // Who sent this: "chris", "jane", "librarian-audit", etc. (will become entity ID)
+  source_type: z.string().optional(),     // Category: "human", "agent", "system"
+  sender: eventParticipantSchema.optional(),     // Rich identity (for display/routing)
   recipients: z.array(eventParticipantSchema).optional(), // Who this message is for
   hints: classificationHintsSchema.optional(),
   metadata: z.record(z.unknown()).default({}),
