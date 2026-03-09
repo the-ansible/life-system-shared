@@ -1,6 +1,6 @@
 {
   "name": "@the-ansible/life-system-shared",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "type": "module",
   "files": ["dist", "src", "tsconfig.json"],
   "repository": {

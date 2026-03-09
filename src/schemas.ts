@@ -159,9 +159,14 @@ export const eventParticipantSchema = z.object({
   id: z.string(),                          // Stable identifier (e.g. "chris", "jane", "memory-worker")
   displayName: z.string().optional(),      // Human-readable name
   type: z.enum(["person", "system", "agent", "channel", "group"]),
+  role: z.string().optional(),             // Agent role for routing (e.g. "architect", "executor", "reviewer")
 });
 
+/** Current CommunicationEvent schema version. Bump on breaking changes. */
+export const COMMUNICATION_EVENT_VERSION = 2;
+
 export const communicationEventSchema = z.object({
+  v: z.number().default(COMMUNICATION_EVENT_VERSION),  // Schema version for forward/backward compat
   id: z.string().uuid(),                   // UUIDv7 — sortable, globally unique
   parentId: z.string().uuid().optional(),  // References a prior event (e.g. the message being replied to)
   sessionId: z.string(),
@@ -169,7 +174,7 @@ export const communicationEventSchema = z.object({
   direction: z.enum(["inbound", "outbound"]),
   contentType: z.literal("markdown"),
   content: z.string(),
-  sender: eventParticipantSchema.optional(),     // Who sent this (will become entity ID)
+  sender: eventParticipantSchema,                 // Who sent this (entity ID)
   recipients: z.array(eventParticipantSchema).optional(), // Who this message is for
   hints: classificationHintsSchema.optional(),
   metadata: z.record(z.unknown()).default({}),
