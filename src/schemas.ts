@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { uuidv7 } from 'uuidv7';
 import { CATEGORIES, INBOX_STATUSES } from './constants.js';
 
 // --- Source metadata ---
@@ -181,9 +182,10 @@ export const communicationEventSchema = z.object({
   timestamp: z.string().datetime(),
 });
 
-/** Input schema for the publish API — id is optional (server generates if omitted) */
+/** Input schema for the publish API — id and sessionId auto-generate if omitted */
 export const communicationEventInputSchema = communicationEventSchema.extend({
   id: z.string().uuid().optional(),
+  sessionId: z.string().default(() => uuidv7()),
 });
 
 // --- Classification result event ---
